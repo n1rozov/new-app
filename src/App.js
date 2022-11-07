@@ -8,7 +8,7 @@ import HeaderComponent from './Body/Header';
 function App() {
   return (
     <Container>
-      <HeaderComponent className="mb-5"/>
+      <HeaderComponent />
       <NewsGroupComponent />
     </Container>
   );

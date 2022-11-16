@@ -1,8 +1,9 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
-import NewsGroupComponent from './Body/NewsGroup';
-import HeaderComponent from './Body/Header';
+import NewsGroupComponent from './Body';
+import HeaderComponent from './Header';
+import PaginationComponent from './Footer';
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
     <Container>
       <HeaderComponent />
       <NewsGroupComponent />
+      <PaginationComponent />
     </Container>
   );
 }

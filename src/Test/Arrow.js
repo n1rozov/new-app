@@ -29,8 +29,6 @@ function handleClickCountMinus(event) {
                 <button onClick={handleClick}>Add 1</button>
                 <button onClick={handleClickIndexMinus}>Minus 1 index</button>
                 <button onClick={handleClickCountMinus}>Minus 1 count</button>
-
-
             </div>
         </div>
     );

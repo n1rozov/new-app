@@ -16,8 +16,7 @@ function NewsModalComponent(props) {
                 <Modal.Body>
                     <Figure>
                         <Figure.Image
-                            height={180}
-                            alt="171x180"
+                            alt=""
                             src={noImage}
                         />
                         <Figure.Caption>

@@ -19,7 +19,7 @@ function NewsGroupComponent() {
                 Search
             </Button>
             <Row xs={1} md={2} className="g-2">
-                {formResponse.articles.map((article, idx) => (
+                {formResponse?.articles.map((article, idx) => (
                     <Col key={idx}>
                         <NewsCardComponent article={article} />
                     </Col>

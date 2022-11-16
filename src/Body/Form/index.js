@@ -9,7 +9,8 @@ import moment from 'moment';
 import { getEverything } from '../../Services/APIServices';
 import 'react-datepicker/dist/react-datepicker.css';
 
-function FormComponent({ show, handleClose, setFormResponse }) {
+
+function FormComponent({ show, handleClose, setFormResponse, searchProps }) {
 
 
     const [startDateFrom, setStartDateFrom] = useState(new Date());
@@ -60,7 +61,12 @@ function FormComponent({ show, handleClose, setFormResponse }) {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>KeyWords</Form.Label>
-                        <Form.Control type="text" name="q" placeholder="Enter keywords or phrases" />
+                        <Form.Control 
+                        type="text" 
+                        name="q" 
+                        placeholder="Enter keywords or phrases"
+                        defaultValue={searchProps.q}
+                         />
                         <Form.Text className="text-muted">
                             Advanced search is supported.
                         </Form.Text>
@@ -74,6 +80,7 @@ function FormComponent({ show, handleClose, setFormResponse }) {
                                 type="checkbox"
                                 value={type}
                                 id={`inline-${type}-1`}
+                                defaultChecked={searchProps.searchIn.includes(type)}
                             />
                         </div>
                     ))}
@@ -99,7 +106,7 @@ function FormComponent({ show, handleClose, setFormResponse }) {
 
                     <Form.Group className="mb-3">
                         <Form.Label>Select langugage</Form.Label>
-                        <Form.Select name="language" >
+                        <Form.Select name="language" defaultValue={searchProps.language}>
                             {langugaes.map((lang) => (
                                 <option key={lang.code} value={lang.code}>{lang.label}</option>
                             ))}

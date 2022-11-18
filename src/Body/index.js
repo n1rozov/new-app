@@ -1,28 +1,40 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import NewsCardComponent from './NewsCard';
 import './News.scss';
 import FormComponent from './Form';
-import moment from 'moment';
-import { getEverything } from '../Services/APIServices';
+import { getEverything } from '../Services/APIService';
+import { useDispatch } from 'react-redux'
+import { setErrorMessage } from '../Services/StateService'
 
 
 function NewsGroupComponent(props) {
+
     const [show, setShow] = useState(false);
-    const [formResponse, setFormResponse] = useState(null);
+    const [articles, setArticles] = useState([]);
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        (async function() {
-            const response = await getEverything(props);
-            const responseData = await response.json();
-            setFormResponse(responseData);
+        (async function () {
+            try {
+                const response = await getEverything(props);
+                const responseData = await response.json();
+                if (responseData.status === 'error') {
+                    throw responseData;
+                }
+                setArticles(responseData.articles);
+            } catch (error) {
+                dispatch(setErrorMessage(error.message));
+            }
+
         })();
-    }, []);
+    }, [props, dispatch]);
 
     return (
         <>
@@ -30,31 +42,22 @@ function NewsGroupComponent(props) {
                 Search
             </Button>
             <Row xs={1} md={2} className="g-2">
-                {formResponse?.articles.map((article, idx) => (
+                {articles.map((article, idx) => (
                     <Col key={idx}>
                         <NewsCardComponent article={article} />
                     </Col>
                 ))}
             </Row>
-            <FormComponent 
-            show={show} 
-            handleClose={handleClose} 
-            setFormResponse={setFormResponse}
-            searchProps={props}
-             />
+            <FormComponent
+                show={show}
+                handleClose={handleClose}
+                setArticles={setArticles}
+                searchProps={props}
+            />
         </>
     );
 }
 
-NewsGroupComponent.defaultProps = {
-    q: 'cars',
-    from: moment().format("YYYY-MM-DDT00:00:00.000"),
-    to: moment().format("YYYY-MM-DDT23:59:59.999"),
-    language: 'en',
-    searchIn: 'title, description, content',
-    pageSize: 12,
-    page: 1,
 
-}
 
 export default NewsGroupComponent;

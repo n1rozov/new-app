@@ -2,6 +2,7 @@
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import GammaLogo from '../GammaLogo.jpg';
+import './ContactSchool.scss'
 
 
 function ContantSchoolComponent() {
@@ -16,9 +17,9 @@ function ContantSchoolComponent() {
                     </Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flushc text-center ">
-                    <ListGroup.Item>Phone: +372 555 81 521</ListGroup.Item>
-                    <ListGroup.Item>Email: info.gammatest.net</ListGroup.Item>
+                    <ListGroup.Item>Email: info@gammatest.net</ListGroup.Item>
                     <ListGroup.Item>Address: 10145, Tornimäe 7-170, Tallinn, Estonia</ListGroup.Item>
+                    <ListGroup.Item>Phone: +372 555 81 521</ListGroup.Item>
                 </ListGroup>
                 <Card.Body className="text-center ">
                     <Card.Link href="https://www.gammatest.net/index.php" className="btn btn-dark stretched-link">Link to the Gamma Int. OÜ</Card.Link>

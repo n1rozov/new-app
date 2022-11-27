@@ -55,7 +55,7 @@ function NewsGroupComponet() {
             <Button variant="outline-primary" onClick={handleShow} className="mb-3">
                 Search
             </Button>
-            <Link to="/bitcoin">Bitcoin today</Link>
+            <Link to="/bitcoin" className="btn btn-dark ml-2 mb-3">Bitcoin today</Link>
             <Row xs={1} md={2} lg={3} className="g-2">
                 {articles.map((article, idx) => (
                     <Col key={idx}>

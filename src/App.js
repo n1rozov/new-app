@@ -2,34 +2,28 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import NewsGroupComponent from './Body';
-import HeaderComponent from './Header';
 import PaginationComponent from './Footer';
-import moment from 'moment';
+import HeaderComponent from './Header/index';
 import ErrorModalComponent from './ErrorModal';
+import ContantComponent from './Body/Contact';
+import ContantSchoolComponent from './Body/ContactSchool';
+import { Routes, Route } from 'react-router-dom';
 
-
-function App(props) {
-
+function App() {
 
   return (
     <Container>
       <HeaderComponent />
-      <NewsGroupComponent {...props} />
-      <PaginationComponent />
+      <Routes>
+        <Route path="/" element={<><NewsGroupComponent /><PaginationComponent /></>} />
+        <Route path="/:q" element={<><NewsGroupComponent /><PaginationComponent /></>} />
+        <Route path="/lang/:lang" element={<><NewsGroupComponent /><PaginationComponent /></>} />
+        <Route path="/contact/school" element={<ContantSchoolComponent />} />
+        <Route path="/contact" element={<ContantComponent />} />
+      </Routes>
       <ErrorModalComponent />
     </Container>
   );
-}
-
-App.defaultProps = {
-  q: 'BMW',
-  from: moment().format("YYYY-MM-DDT00:00:00.000"),
-  to: moment().format("YYYY-MM-DDT23:59:59.999"),
-  language: 'en',
-  searchIn: 'title,description,content',
-  pageSize: 12,
-  page: 1,
-
 }
 
 export default App;

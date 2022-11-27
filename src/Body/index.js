@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import NewsCardComponent from './NewsCard';
-import './News.scss';
 import FormComponent from './Form';
-import { getEverything } from '../Services/APIService';
-import { useDispatch } from 'react-redux'
-import { setErrorMessage } from '../Services/StateService'
+import { getEverything } from '../services/apiServices';
+import { useDispatch, useSelector } from 'react-redux';
+import { setErrorMessage, setTotalResults, setSearchParams } from '../services/stateService';
+import { useParams, Link } from 'react-router-dom';
+import './News.scss';
 
-
-function NewsGroupComponent(props) {
+function NewsGroupComponet() {
 
     const [show, setShow] = useState(false);
     const [articles, setArticles] = useState([]);
@@ -18,30 +18,45 @@ function NewsGroupComponent(props) {
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
 
+    const { q, lang } = useParams();
+
     const dispatch = useDispatch();
+    
+    const searchParams = useSelector((state) => state.searchParams);
 
     useEffect(() => {
+        if(lang && searchParams.language !== lang){
+            dispatch(setSearchParams({
+                ...searchParams,
+                language: lang,
+            }));
+            return;
+        }
         (async function () {
             try {
-                const response = await getEverything(props);
+                const response = await getEverything({
+                    ...searchParams,
+                    q: q || searchParams.q,
+                });
                 const responseData = await response.json();
                 if (responseData.status === 'error') {
                     throw responseData;
                 }
                 setArticles(responseData.articles);
+                dispatch(setTotalResults(responseData.totalResults));
             } catch (error) {
                 dispatch(setErrorMessage(error.message));
             }
-
         })();
-    }, [props, dispatch]);
+    }, [searchParams, dispatch, q, lang]);
 
     return (
         <>
             <Button variant="outline-primary" onClick={handleShow} className="mb-3">
                 Search
             </Button>
-            <Row xs={1} md={2} className="g-2">
+            <Link to="/bitcoin">Bitcoin today</Link>
+            <Row xs={1} md={2} lg={3} className="g-2">
                 {articles.map((article, idx) => (
                     <Col key={idx}>
                         <NewsCardComponent article={article} />
@@ -52,12 +67,10 @@ function NewsGroupComponent(props) {
                 show={show}
                 handleClose={handleClose}
                 setArticles={setArticles}
-                searchProps={props}
+                searchProps={searchParams}
             />
         </>
     );
 }
 
-
-
-export default NewsGroupComponent;
+export default NewsGroupComponet;

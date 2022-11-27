@@ -1,11 +1,9 @@
 import Button from 'react-bootstrap/Button';
-import Figure from 'react-bootstrap/Figure';
-import noImage from '../dummy-post-horisontal.jpg';
 import Modal from 'react-bootstrap/Modal';
+import noImage from '../dummy-post-horisontal.jpg';
+import Figure from 'react-bootstrap/Figure';
 
-
-function NewsModalComponent({ setShow, show, article}) {
-
+function NewsModalComponent({ setShow, show, article }) {
     const handleClose = () => setShow(false);
 
     return (
@@ -18,14 +16,16 @@ function NewsModalComponent({ setShow, show, article}) {
                     <Figure>
                         <Figure.Image
                             alt=""
-                            src={article.urlToImgage || noImage}
+                            src={article.urlToImage || noImage}
                         />
                         <Figure.Caption>
-                        {article.url}
+                            {article.url}
                         </Figure.Caption>
                     </Figure>
                     <p>{article.content}</p>
-                    <Button variant="outline-primary" href={article.url} target="_blank" className="w-100">Read more</Button>
+                    <Button variant="outline-primary" href={article.url} target="_blank" className="w-100">
+                            Read more
+                    </Button>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
@@ -37,6 +37,4 @@ function NewsModalComponent({ setShow, show, article}) {
     );
 }
 
-
 export default NewsModalComponent;
-
